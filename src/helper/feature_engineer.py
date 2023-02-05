@@ -62,7 +62,7 @@ class FeatureEngineer:
             return None
     
     def process_jam_dataset(self) -> None:
-        logger.info("Start completing jam dataset")
+        logger.info("Start completing jams dataset")
         used_col = [
             'time',
             'street',
@@ -80,7 +80,7 @@ class FeatureEngineer:
         curr = 1
         total = len(lst_street)
         for street in lst_street:
-            logger.info("Completing jam dataset related to {} ({}/{})".format(street, curr, total))
+            logger.info("Completing jams dataset related to {} ({}/{})".format(street, curr, total))
             used_data = df_jam[df_jam['street'] == street]
             used_data.sort_values(by=['time'], 
                 ascending=True, 
@@ -119,9 +119,9 @@ class FeatureEngineer:
         self.jam_dataset = completed_jam
         self.save_dataset_to_parquet(
             completed_jam,
-            self.complete_dataset_template("jam", self.city)
+            self.complete_dataset_template("jams", self.city)
         )
-        logger.info("Finish completing jam dataset")
+        logger.info("Finish completing jams dataset")
 
     def clean_delay_data(self, data, is_external) -> float:
         min_level = min(data['level'])
