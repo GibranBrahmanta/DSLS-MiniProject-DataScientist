@@ -1,0 +1,26 @@
+dataset:
+  year: 2022
+  city: 
+    - Bogor
+  weather:
+    api_key: ""
+    gmt: 7
+  preprocessing:
+    completion_threshold: 0.90
+  timestamp:
+    start_timestamp: '2022-07-06 09:00:00.000'
+    end_timestamp: '2022-09-04 21:00:00.000'
+modeling:
+  time_series:
+    train_set: '2022-07-06 09:00:00.000'
+    test_set: '2022-08-24 00:00:00.000'
+  classification:
+    train_set: '2022-07-06 09:00:00.000'
+    valid_set: '2022-08-24 00:00:00.000'
+    test_set: '2022-08-31 00:00:00.000'
+pipeline:
+  create_holiday_data: False
+  create_weather_data:
+    Bogor: False
+  clean_data:
+    Bogor: False
