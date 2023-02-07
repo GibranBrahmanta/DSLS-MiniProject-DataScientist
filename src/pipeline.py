@@ -23,6 +23,10 @@ class Pipeline:
         self.dataset_generator.create_dataset()
         self.feature_engineer.build_feature()
         self.time_series_experiment.pipeline()
+
+if __name__ == '__main__':
+    pipeline = Pipeline()
+    pipeline.run()
         
 
 

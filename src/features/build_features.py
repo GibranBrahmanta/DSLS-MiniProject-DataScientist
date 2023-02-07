@@ -284,6 +284,6 @@ class FeatureEngineer:
     def save_dataset_to_parquet(self, dataset, path) -> bool:
         dataset.to_parquet(path, index=False, compression="gzip")  
 
-
-
-    
+if __name__ == "__main__":
+    fe = FeatureEngineer()
+    fe.build_feature()
