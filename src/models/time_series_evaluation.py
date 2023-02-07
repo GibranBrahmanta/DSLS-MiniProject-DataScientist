@@ -1,0 +1,27 @@
+from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error, r2_score
+
+class Evaluation:
+    
+    def __init__(self, actual, pred):
+        self.actual = actual
+        self.pred = pred
+    
+    def get_rmse(self):
+        return mean_squared_error(self.actual, self.pred, squared=False)
+    
+    def get_mae(self):
+        return mean_absolute_error(self.actual, self.pred)
+    
+    def get_mape(self):
+        return mean_absolute_percentage_error(self.actual, self.pred)
+    
+    def get_r2_score(self):
+        return r2_score(self.actual, self.pred)
+    
+    def get_eval_result(self):
+        result = {
+            'rmse': self.get_rmse(),
+            'mae': self.get_mae(),
+            'mape': self.get_mape(),
+        }
+        return result
