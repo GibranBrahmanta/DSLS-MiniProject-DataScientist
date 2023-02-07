@@ -1,7 +1,7 @@
+city: 
+    - Bogor
 dataset:
   year: 2022
-  city: 
-    - Bogor
   weather:
     api_key: ""
     gmt: 7
@@ -22,5 +22,9 @@ pipeline:
   create_holiday_data: False
   create_weather_data:
     Bogor: False
-  clean_data:
+  clean_dataset:
+    Bogor: False
+  build_feature:
+    Bogor: False
+  time_series_modeling:
     Bogor: False
