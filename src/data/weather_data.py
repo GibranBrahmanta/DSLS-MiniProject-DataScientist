@@ -110,16 +110,3 @@ class WeatherScrapper:
         )
         logger.info("Finish save data")
         return df
-
-if __name__ == "__main__":
-    df_jam_corr = pd.read_parquet("./data/misc/jam_corr.parquet.gzip")
-    grouped_df_jam_corr = df_jam_corr.groupby(by=['street']).mean()
-    grouped_df_jam_corr.reset_index(inplace=True)
-    grouped_df_jam_corr.rename(columns={'index': 'street'}, inplace=True)
-    data = grouped_df_jam_corr.describe().loc['mean',['mean_long', 'mean_lat']].to_dict()
-    data['long'] = data.pop('mean_long')
-    data['lat'] = data.pop('mean_lat')
-    scrapper = WeatherScrapper(data, 'Bogor')
-    start_timestamp = datetime.strptime("2022-09-04 01:00:00.000", '%Y-%m-%d %H:%M:%S.%f')
-    end_timestamp = datetime.strptime("2022-09-04 21:00:00.000", '%Y-%m-%d %H:%M:%S.%f')
-    scrapper.get_weather_data(start_timestamp, end_timestamp, 1)

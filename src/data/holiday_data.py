@@ -83,10 +83,3 @@ class HolidayScrapper:
                     index=False, compression="gzip")
         logger.info("Finish save data")
         return df
-
-if __name__ == "__main__":
-    web_scrapper = HolidayScrapper(dataset['year'],
-        "./data/external/holiday_{}.parquet.gzip"
-    )
-    web_scrapper.get_dataset()
-

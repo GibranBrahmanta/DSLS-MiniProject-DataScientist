@@ -14,13 +14,19 @@ from datetime import datetime, timedelta
 from random import randint
 from src.utils.config import config
 
-dataset_config = config['dataset']
-modeling_config = config['modeling']
-
 class FeatureEngineer:
 
-    complete_dataset_template = "./data/processed/complete_aggregate_{}_{}.parquet.gzip"
+    dataset_config = config['dataset']
+    modeling_config = config['modeling']
+    pipeline_config = config['pipeline']
+    lst_city = config['city']
+
+    cleaned_dataset_path_template = "./data/interim/cleaned_aggregate_{}_{}.parquet.gzip"
+    complete_dataset_template = "./data/interim/complete_aggregate_{}_{}.parquet.gzip"
     final_dataset_template = "./data/processed/final_dataset_{}.parquet.gzip"
+
+    holiday_dataset_path_template = "./data/external/holiday_{}.parquet.gzip"
+    weather_dataset_path_template = "./data/external/weather_{}.parquet.gzip"
 
     speed_constanta = {
         1: [61, 80],
@@ -43,25 +49,20 @@ class FeatureEngineer:
         'test': datetime.strptime(modeling_config['classification']['test_set'], '%Y-%m-%d %H:%M:%S.%f')
     }   
     
-    def __init__(self, city, internal_dataset, weather_data, holiday_data) -> None:
-        self.city = city
-        self.jam_dataset = internal_dataset['jams']
-        self.irregularities_dataset = internal_dataset['irregularities']
-        self.weather_data = weather_data
-        self.holiday_data = holiday_data
-    
-    def create_feature(self) -> None:
+    def build_feature(self) -> None:
         try:
-            logger.info("Start creating final dataset on {}".format(self.city))
-            self.process_jam_dataset()
-            self.process_irregularities_dataset()
-            self.create_final_dataset()
-            logger.info("Finish creating final dataset on {}".format(self.city))
+            for city in self.lst_city:
+                if self.pipeline_config['build_feature'][city]:
+                    logger.info("Start creating final dataset on {}".format(city))
+                    completed_jam = self.process_jam_dataset(city)
+                    completed_irregularities = self.process_irregularities_dataset(city)
+                    self.create_final_dataset(completed_jam, completed_irregularities, city)
+                    logger.info("Finish creating final dataset on {}".format(city))
         except Exception as e:
             logger.info("ERROR: {} - {}".format(e.__class__.__name__, str(e)))
             return None
     
-    def process_jam_dataset(self) -> None:
+    def process_jam_dataset(self, city) -> None:
         logger.info("Start completing jams dataset")
         used_col = [
             'time',
@@ -71,7 +72,8 @@ class FeatureEngineer:
             'median_delay',
             'median_speed_kmh'
         ]
-        df_jam = self.jam_dataset.loc[:, used_col]
+        df_jam = pd.read_parquet(self.cleaned_dataset_path_template('jams', city))
+        df_jam = df_jam.loc[:, used_col]
 
         lst_street = list(set(df_jam['street']))
 
@@ -174,7 +176,7 @@ class FeatureEngineer:
         )
         return (constanta/(10*min_level)) * current_median_speed
     
-    def process_irregularities_dataset(self) -> None:
+    def process_irregularities_dataset(self, city) -> None:
         logger.info("Start completing irregularities dataset")
         used_col = [
             'time',
@@ -182,7 +184,8 @@ class FeatureEngineer:
             'median_regular_speed',
             'median_delay_seconds'
         ]
-        df_irregularities = self.irregularities_dataset.loc[:, used_col]
+        df_irregularities = pd.read_parquet(self.cleaned_dataset_path_template.format('irregularities', city))
+        df_irregularities = df_irregularities.loc[:, used_col]
 
         lst_street = list(set(self.jam_dataset['street']))
 
@@ -230,26 +233,28 @@ class FeatureEngineer:
             return data[column].values[0]
         return np.quantile(data.iloc[:-1,:][column], q=0.5)
     
-    def create_final_dataset(self) -> None:
+    def create_final_dataset(self, jam_dataset, irregularities_dataset, city) -> None:
         logger.info("Merging all dataset")
-        final_dataset = self.jam_dataset.join(
-            self.irregularities_dataset.set_index(['time', 'street']),
+        holiday_data = pd.read_parquet(self.holiday_dataset_path_template.format(self.dataset_config['year']))
+        weather_data = pd.read_parquet(self.weather_dataset_path_template.format(city))
+        final_dataset = jam_dataset.join(
+            irregularities_dataset.set_index(['time', 'street']),
             on=['time', 'street'],
             how='inner'
         )
         final_dataset = final_dataset.join(
-            self.weather_data.set_index(["timestamp"]),
+            weather_data.set_index(["timestamp"]),
             on=['time'],
             how='inner'
         )
-        final_dataset['holiday_gap'] = final_dataset['time'].apply(self.get_nearest_holiday_gap, args=(self.holiday_data,))
+        final_dataset['holiday_gap'] = final_dataset['time'].apply(self.get_nearest_holiday_gap, args=(holiday_data,))
         final_dataset.reset_index(inplace=True, drop=True)
         logger.info("Create Additional Features")
         final_dataset['time_series_split'] = final_dataset['time'].apply(self.get_time_series_split, args=(self.time_series_split,))
         final_dataset['classification_split'] = final_dataset['time'].apply(self.get_classification_split, args=(self.classification_split,))
         self.save_dataset_to_parquet(
             final_dataset,
-            self.final_dataset_template.format(self.city)
+            self.final_dataset_template.format(city)
         )
 
     def get_nearest_holiday_gap(self, time, data) -> int:

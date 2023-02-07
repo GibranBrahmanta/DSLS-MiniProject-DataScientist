@@ -17,7 +17,7 @@ dataset_config = config['dataset']
 class DataCleaner:
 
     raw_dataset_path_template = "./data/raw/aggregate_median_{}_Kota {}.csv"
-    cleaned_dataset_path_template = "./data/processed/cleaned_aggregate_{}_{}.parquet.gzip"
+    cleaned_dataset_path_template = "./data/interim/cleaned_aggregate_{}_{}.parquet.gzip"
 
     def clean_dataset(self, city) -> dict:
         try:
