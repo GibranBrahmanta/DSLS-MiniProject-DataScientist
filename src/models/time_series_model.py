@@ -7,6 +7,7 @@ logger.setLevel(logging.INFO)
 
 from pmdarima.arima import auto_arima
 from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 class Predictor:
 
@@ -90,7 +91,7 @@ class ARIMAForecast:
 
 class SARIMAForecast:
 
-    param_path = "./data/param/SARIMA_{}_{}.parquet.gzip"
+    param_path = "./model/time_series/SARIMA_{}_{}.parquet.gzip"
 
     def __init__(self, city, attr):
         try:
@@ -136,6 +137,20 @@ class SARIMAForecast:
             index=False,
             compression="gzip"
         )
+    
+    def predict(self, street, data, timestep):
+        order, seasonal = self.get_param(street)
+        model = SARIMAX(data.values, order=order, seasonal_order=seasonal)
+        model_fitted = model.fit()
+        res = model_fitted.forecast(steps=timestep)
+        return res
+
+    def get_param(self, street):
+        data = self.param[self.param['street'] == street]
+        order = (data['p'].values[0], data['d'].values[0], data['q'].values[0])
+        seasonal = (data['s_p'].values[0], data['s_d'].values[0], data['s_q'].values[0])
+        return order, seasonal
+    
 
 
 
