@@ -104,10 +104,9 @@ class TimeSeriesExperiment:
                     data=[[
                         model_name,
                         overall_res['rmse'],
-                        overall_res['mae'],
-                        overall_res['mape']
+                        overall_res['mae']
                     ]],
-                    columns=['model_name', 'rmse', 'mae', 'mape']
+                    columns=['model_name', 'rmse', 'mae']
                 )
                 overall_df.to_csv(
                     self.eval_result_template.format(model_name, self.city, feature, 'overall'),
@@ -126,12 +125,11 @@ class TimeSeriesExperiment:
             data.append([
                 cat,
                 eval_res['rmse'],
-                eval_res['mae'],
-                eval_res['mape']
+                eval_res['mae']
             ])
         result_df = pd.DataFrame(
             data=data,
-            columns=[category, 'rmse', 'mae', 'mape']
+            columns=[category, 'rmse', 'mae']
         )
         result_df.to_csv(
             self.eval_result_template.format(model_name, self.city, feature, category),

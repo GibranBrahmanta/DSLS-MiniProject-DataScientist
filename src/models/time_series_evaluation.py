@@ -1,4 +1,4 @@
-from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error, r2_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 class Evaluation:
     
@@ -11,17 +11,10 @@ class Evaluation:
     
     def get_mae(self):
         return mean_absolute_error(self.actual, self.pred)
-    
-    def get_mape(self):
-        return mean_absolute_percentage_error(self.actual, self.pred)
-    
-    def get_r2_score(self):
-        return r2_score(self.actual, self.pred)
-    
+        
     def get_eval_result(self):
         result = {
             'rmse': self.get_rmse(),
-            'mae': self.get_mae(),
-            'mape': self.get_mape(),
+            'mae': self.get_mae()
         }
         return result
