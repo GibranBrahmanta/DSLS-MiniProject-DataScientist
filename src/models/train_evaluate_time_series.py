@@ -33,7 +33,7 @@ class TimeSeriesExperiment:
         dataset = pd.read_parquet(self.dataset_path_template.format(city))
         return dataset
     
-    def pipeline(self):
+    def run(self):
         for city in self.lst_city:
             dataset = self.open_dataset(city)
             self.train(city, dataset)
@@ -137,4 +137,4 @@ class TimeSeriesExperiment:
 
 if __name__ == '__main__':
     exp = TimeSeriesExperiment()
-    exp.pipeline()
+    exp.run()
