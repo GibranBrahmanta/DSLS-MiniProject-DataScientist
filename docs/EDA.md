@@ -1,5 +1,9 @@
 # EDA Result
 
+## Objective 
+
+To find several insights that can be helpful to create a traffic jam classification model on Bogor
+
 ## Alerts Dataset
 
 - < 10% of the rows have null value on one of its attributes, those rows were being dropped and not being included in the analysis
