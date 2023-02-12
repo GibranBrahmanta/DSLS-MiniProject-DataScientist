@@ -23,15 +23,22 @@ class DataCleaner:
         try:
             lst_dataset_type = ['jams', 'irregularities']
 
+            used_street = None
             result = {}
             for dataset_type in lst_dataset_type:
                 logger.info("Start cleaning {} dataset".format(dataset_type))
                 path = self.raw_dataset_path_template.format(dataset_type, city)
                 dataset = pd.read_parquet(path)
                 dataset_non_duplicated = self.remove_duplicate(dataset)
-                used_dataset = self.filter_street(dataset_non_duplicated, 
-                    threshold=dataset_config['preprocessing']['completion_threshold']
-                )
+                if dataset_type == 'jams':
+                    used_dataset, used_street = self.filter_street(dataset_non_duplicated, 
+                        threshold=dataset_config['preprocessing']['completion_threshold']
+                    )
+                else:
+                    used_dataset, used_street = self.filter_street(dataset_non_duplicated, 
+                        threshold=dataset_config['preprocessing']['completion_threshold'],
+                        used_street=used_street
+                    )
                 self.save_dataset_to_parquet(used_dataset,
                     self.cleaned_dataset_path_template.format(dataset_type, city)
                 )
@@ -60,10 +67,11 @@ class DataCleaner:
     
         return result
     
-    def filter_street(self, dataset, threshold) -> pd.DataFrame:
-        completion_rate_data = self.compute_completion_rate(dataset)
-        used_street = self.get_used_street(completion_rate_data, threshold)
-        return dataset[dataset['street'].isin(used_street)]
+    def filter_street(self, dataset, threshold, used_street=None) -> tuple[pd.DataFrame, list]:
+        if not used_street:
+            completion_rate_data = self.compute_completion_rate(dataset)
+            used_street = self.get_used_street(completion_rate_data, threshold)
+        return dataset[dataset['street'].isin(used_street)], used_street
     
     def compute_completion_rate(self, dataset) -> pd.DataFrame:
         street_count = dataset['street'].value_counts().to_dict()
