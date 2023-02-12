@@ -1,6 +1,6 @@
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-class Evaluation:
+class TimeSeriesEvaluation:
     
     def __init__(self, actual, pred):
         self.actual = actual

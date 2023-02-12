@@ -1,17 +1,17 @@
 import logging
 import pandas as pd
-import random
-import warnings
+import sys
+import os
+
+sys.path.append(os.getcwd())
 
 logging.basicConfig(format='%(asctime)s [Time Series Experiment] %(message)s')
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-warnings.filterwarnings('ignore')
-
 from time_series_model import Predictor
-from time_series_evaluation import Evaluation
-from utils.config import config
+from time_series_evaluation import TimeSeriesEvaluation
+from src.utils.config import config
 
 class TimeSeriesExperiment:
 
@@ -36,24 +36,23 @@ class TimeSeriesExperiment:
     def pipeline(self):
         for city in self.lst_city:
             dataset = self.open_dataset(city)
-            self.modeling(dataset)
-            self.inference(dataset)
+            self.train(city, dataset)
+            self.inference(city, dataset)
             self.evaluate_model()
     
-    def modeling(self, dataset):
+    def train(self, city, dataset):
         train_dataset = dataset[dataset['time_series_split'] == 'train']
-
         for model_name in self.lst_model:
             for feature in self.lst_feature:
                 logger.info("Start train {} model on {}".format(model_name, feature))
                 model = Predictor(
-                    city=self.city,
+                    city=city,
                     model_name=model_name,
                     attr=feature
                 )
                 model.train(train_dataset)
     
-    def inference(self, dataset):
+    def inference(self, city, dataset):
         train_dataset = dataset[dataset['time_series_split'] == 'train']
         test_dataset = dataset[dataset['time_series_split'] == 'test']
 
@@ -63,7 +62,7 @@ class TimeSeriesExperiment:
             for feature in self.lst_feature:
                 logger.info("Start inference {} model on {}".format(model_name, feature))
                 model = Predictor(
-                    city=self.city,
+                    city=city,
                     model_name=model_name,
                     attr=feature
                 )
@@ -93,12 +92,12 @@ class TimeSeriesExperiment:
                     compression="gzip"
                 )
 
-    def evaluate_model(self):
+    def evaluate_model(self, city):
         for model_name in self.lst_model:
             for feature in self.lst_feature:
                 logger.info("Start evaluation {} model on {}".format(model_name, feature))
-                model_result = pd.read_parquet(self.model_result_template.format(model_name, self.city, feature))
-                overall_eval = Evaluation(model_result['actual'], model_result['pred'])
+                model_result = pd.read_parquet(self.model_result_template.format(model_name, city, feature))
+                overall_eval = TimeSeriesEvaluation(model_result['actual'], model_result['pred'])
                 overall_res = overall_eval.get_eval_result()
                 overall_df = pd.DataFrame(
                     data=[[
@@ -120,7 +119,7 @@ class TimeSeriesExperiment:
         data = []
         for cat in lst_category:
             used_result = model_result[model_result[category] == cat]
-            eval = Evaluation(used_result['actual'], used_result['pred'])
+            eval = TimeSeriesEvaluation(used_result['actual'], used_result['pred'])
             eval_res = eval.get_eval_result()
             data.append([
                 cat,
