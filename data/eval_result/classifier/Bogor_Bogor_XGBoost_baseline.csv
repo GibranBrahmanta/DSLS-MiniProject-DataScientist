@@ -1,0 +1,2 @@
+model_conf,accuracy,precision,recall,f1-score
+Bogor_XGBoost_baseline,0.6068533529845247,0.7290624573335697,0.5338354019410458,0.5818456257866101

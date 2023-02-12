@@ -1,0 +1,2 @@
+model_conf,accuracy,precision,recall,f1-score
+Bogor_DecisionTree_baseline,0.5980103168754606,0.7239645644549594,0.5246202350566868,0.5693710031838252

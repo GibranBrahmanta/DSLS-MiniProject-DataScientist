@@ -1,0 +1,11 @@
+,model_conf,accuracy,precision,recall,f1-score
+0,Bogor_LightGBM_(learning_rate_0.01)(n_estimators_100)(max_depth_50)(objective_multiclass),0.6212232866617539,0.7396674814303305,0.5436918110277491,0.5914668135599088
+1,Bogor_LightGBM_(learning_rate_0.01)(n_estimators_100)(max_depth_100)(objective_multiclass),0.6212232866617539,0.7396674814303305,0.5436918110277491,0.5914668135599088
+5,Bogor_LightGBM_(learning_rate_0.01)(n_estimators_250)(max_depth_10)(objective_multiclass),0.6169859985261607,0.7363751488365522,0.5409324611928296,0.5888721762725319
+4,Bogor_LightGBM_(learning_rate_0.01)(n_estimators_100)(max_depth_10)(objective_multiclass),0.6147752394988946,0.7347823308782839,0.5396047885792511,0.5877219714806493
+2,Bogor_LightGBM_(learning_rate_0.001)(n_estimators_500)(max_depth_50)(objective_multiclass),0.6190125276344879,0.7387343750024454,0.5409127361810124,0.5875992009140308
+3,Bogor_LightGBM_(learning_rate_0.001)(n_estimators_500)(max_depth_100)(objective_multiclass),0.6190125276344879,0.7387343750024454,0.5409127361810124,0.5875992009140308
+7,Bogor_LightGBM_(learning_rate_0.01)(n_estimators_500)(max_depth_10)(objective_multiclass),0.6153279292557111,0.7356613735578131,0.5385772947818708,0.585505856242929
+9,Bogor_LightGBM_(learning_rate_0.1)(n_estimators_100)(max_depth_50)(objective_multiclass),0.6099852616064849,0.7316758242904986,0.5349905703603695,0.5820979144086537
+6,Bogor_LightGBM_(learning_rate_0.001)(n_estimators_500)(max_depth_10)(objective_multiclass),0.6138540899042004,0.7362314478506148,0.5358932586284345,0.5809212418025859
+8,Bogor_LightGBM_(learning_rate_0.1)(n_estimators_100)(max_depth_10)(objective_multiclass),0.6068533529845247,0.7292091121376202,0.5332425756767981,0.5807750292988678

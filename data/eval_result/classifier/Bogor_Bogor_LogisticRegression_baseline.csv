@@ -1,0 +1,2 @@
+model_conf,accuracy,precision,recall,f1-score
+Bogor_LogisticRegression_baseline,0.5987472365512159,0.7237157287157286,0.5311137089468679,0.5804832343568881

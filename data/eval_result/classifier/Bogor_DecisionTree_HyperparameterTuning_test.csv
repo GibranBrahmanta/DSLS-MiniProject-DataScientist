@@ -1,0 +1,11 @@
+,model_conf,accuracy,precision,recall,f1-score
+0,Bogor_DecisionTree_(criterion_entropy)(splitter_best)(max_depth_10)(max_features_auto),0.6258290346352248,0.7424440896482509,0.5503316086419552,0.5994277019042403
+2,Bogor_DecisionTree_(criterion_entropy)(splitter_best)(max_depth_10)(max_features_log2),0.6050110537951363,0.7298802372898031,0.5381462136145231,0.5871500647337767
+8,Bogor_DecisionTree_(criterion_log_loss)(splitter_random)(max_depth_100)(max_features_log2),0.6088798820928519,0.7303673068605354,0.5365958276857009,0.5853839848136927
+7,Bogor_DecisionTree_(criterion_gini)(splitter_best)(max_depth_75)(max_features_sqrt),0.6061164333087693,0.7287153908794789,0.5357437071752033,0.5849488194755726
+4,Bogor_DecisionTree_(criterion_log_loss)(splitter_best)(max_depth_75)(max_features_auto),0.6099852616064849,0.7311187139020712,0.5358900308992282,0.5837484718793425
+1,Bogor_DecisionTree_(criterion_entropy)(splitter_best)(max_depth_50)(max_features_log2),0.6098010316875461,0.7314366414232111,0.5347879406935213,0.5818112699773108
+3,Bogor_DecisionTree_(criterion_log_loss)(splitter_best)(max_depth_100)(max_features_sqrt),0.6048268238761975,0.7273915342104162,0.5319744367352495,0.5796189754519646
+9,Bogor_DecisionTree_(criterion_entropy)(splitter_best)(max_depth_25)(max_features_sqrt),0.6083271923360354,0.73153806402492,0.5328193845141772,0.5788914252183841
+5,Bogor_DecisionTree_(criterion_gini)(splitter_random)(max_depth_75)(max_features_sqrt),0.5797715549005158,0.7157557607982364,0.5228557430905048,0.5706668874172595
+6,Bogor_DecisionTree_(criterion_gini)(splitter_best)(max_depth_100)(max_features_sqrt),0.5825350036845984,0.7123456534264808,0.5192310031916834,0.5686890171739362

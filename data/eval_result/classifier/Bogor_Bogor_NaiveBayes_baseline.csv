@@ -1,0 +1,2 @@
+model_conf,accuracy,precision,recall,f1-score
+Bogor_NaiveBayes_baseline,0.5029476787030214,0.2616290018832392,0.49351278206942756,0.3405753376407235

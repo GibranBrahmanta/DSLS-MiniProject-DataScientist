@@ -1,0 +1,2 @@
+model_conf,accuracy,precision,recall,f1-score
+Bogor_RandomForest_baseline,0.6051952837140752,0.7280823942886622,0.5315620046699833,0.5786113255185604

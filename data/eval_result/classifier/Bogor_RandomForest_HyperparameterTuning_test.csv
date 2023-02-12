@@ -1,0 +1,11 @@
+,model_conf,accuracy,precision,recall,f1-score
+2,Bogor_RandomForest_(criterion_log_loss)(n_estimators_500)(max_depth_10)(max_features_auto),0.6195652173913043,0.738166643812958,0.5429311428447671,0.590986515284402
+0,Bogor_RandomForest_(criterion_log_loss)(n_estimators_500)(max_depth_10)(max_features_log2),0.6190125276344879,0.7377743001595115,0.5425072344089891,0.5905407538913267
+9,Bogor_RandomForest_(criterion_entropy)(n_estimators_250)(max_depth_50)(max_features_sqrt),0.621039056742815,0.7398381292353226,0.5425488362520942,0.5894194321136329
+7,Bogor_RandomForest_(criterion_entropy)(n_estimators_250)(max_depth_10)(max_features_auto),0.6162490788504053,0.7357258019054062,0.5407556533596328,0.5889308307867183
+5,Bogor_RandomForest_(criterion_entropy)(n_estimators_500)(max_depth_10)(max_features_sqrt),0.6147752394988946,0.7346250602473355,0.5397274422890955,0.5879114074795325
+6,Bogor_RandomForest_(criterion_entropy)(n_estimators_250)(max_depth_10)(max_features_log2),0.6125644804716286,0.7330173682006662,0.5389517113698167,0.5876055722251078
+8,Bogor_RandomForest_(criterion_entropy)(n_estimators_500)(max_depth_10)(max_features_log2),0.6116433308769345,0.7323593213965703,0.5380816590303944,0.5866244803419606
+1,Bogor_RandomForest_(criterion_entropy)(n_estimators_500)(max_depth_10)(max_features_auto),0.6121960206337509,0.7327674810603937,0.5381784909065873,0.5865483505614679
+3,Bogor_RandomForest_(criterion_log_loss)(n_estimators_250)(max_depth_10)(max_features_auto),0.6109064112011791,0.731832976105422,0.5375164477826907,0.5860378435955361
+4,Bogor_RandomForest_(criterion_log_loss)(n_estimators_250)(max_depth_10)(max_features_sqrt),0.6099852616064849,0.7311458087400027,0.5367690491531126,0.5852356187966975
