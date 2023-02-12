@@ -248,6 +248,7 @@ class FeatureEngineer:
             how='inner'
         )
         final_dataset['holiday_gap'] = final_dataset['time'].apply(self.get_nearest_holiday_gap, args=(holiday_data,))
+        final_dataset['level'] = final_dataset['level'].apply(self.convert_level)
         final_dataset.reset_index(inplace=True, drop=True)
         logger.info("Create Additional Features")
         final_dataset['time_series_split'] = final_dataset['time'].apply(self.get_time_series_split, args=(self.time_series_split,))
@@ -256,6 +257,9 @@ class FeatureEngineer:
             final_dataset,
             self.final_dataset_template.format(city)
         )
+
+    def convert_level(self, level) -> int:
+        return level // 2
 
     def get_nearest_holiday_gap(self, time, data) -> int:
         nearest = 365
