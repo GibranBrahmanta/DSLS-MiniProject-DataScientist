@@ -80,7 +80,7 @@ class DatasetGenerator:
             'lat': np.mean(coordinate_df['mean_lat'])
         }
         scrapper = WeatherScrapper(coordinate_data, city)
-        result = scrapper.get_weather_data(self.start_timestamp, self.end_timestamp)
+        result = scrapper.get_weather_data(self.start_timestamp, self.end_timestamp, 1)
         if not result:
             raise Exception("Failed on create weather dataset")
         logger.info("Finish create weather dataset related to: {}".format(city))
