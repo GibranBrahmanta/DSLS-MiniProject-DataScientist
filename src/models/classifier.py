@@ -12,11 +12,15 @@ class Classifier:
 
     model_path = "./model/classifier/{}.pkl"
 
-    def __init__(self, city, model_name, param=None) -> None:
+    def __init__(self, city, model_name, param=None, model_path=None) -> None:
         self.city = city
-        self.model_conf = self.get_model_conf(city, model_name, param)
-        self.model = self.create_model(model_name, param)
-    
+        if model_path:
+            self.model = self.open_model(model_path)
+            self.model_conf = model_path
+        else:
+            self.model = self.create_model(model_name, param)
+            self.model_conf = self.get_model_conf(city, model_name, param)
+
     def get_model_conf(self, city, model_name, param) -> str:
         res = "{}_{}_{}"
         if param:
@@ -77,9 +81,15 @@ class Classifier:
         self.model.fit(X, y)
     
     def predict(self, data) -> list:
+        if "NaiveBayes" in self.model_conf:
+            data.replace(-1, 8, inplace=True)
         return self.model.predict(data.iloc[:,0:-1])
     
     def save_model(self) -> None:
         path = self.model_path.format(self.model_conf)
         with open(path, 'wb') as file:
             pickle.dump(self.model, file)
+    
+    def open_model(self, path):
+        model = pickle.load(open(self.model_path.format(path), 'rb'))
+        return model
