@@ -26,12 +26,12 @@ class WeatherScrapper:
         self.location_data = location_data
         self.city = city
     
-    def get_weather_data(self, start_timestamp, end_timestamp, timestep) -> pd.DataFrame:
+    def get_weather_data(self, start_timestamp, end_timestamp, timestep, save_dataset=True) -> pd.DataFrame:
         logger.info("Start process")
         try:
             lst_timestamp = self.generate_possible_timestamp(start_timestamp, end_timestamp, timestep)
             lst_weather_condition = self.get_weather_condition(lst_timestamp)
-            dataset = self.save_dataset(lst_weather_condition, start_timestamp, end_timestamp)
+            dataset = self.save_dataset(lst_weather_condition, start_timestamp, end_timestamp, save_dataset)
             logger.info("Finish process")
             return dataset
         except Exception as e:
@@ -86,7 +86,7 @@ class WeatherScrapper:
         )
         return requests.get(url).json()
     
-    def save_dataset(self, lst_weather_condition, start_timestamp, end_timestamp) -> pd.DataFrame:
+    def save_dataset(self, lst_weather_condition, start_timestamp, end_timestamp, save_dataset) -> pd.DataFrame:
         df = pd.DataFrame(data=lst_weather_condition, columns=[
             'timestamp',
             'temp',
@@ -102,11 +102,12 @@ class WeatherScrapper:
         ])
         str_start_timestamp = datetime.strftime(start_timestamp, '%Y-%m-%d-%H-%M-%S')
         str_end_timestamp = datetime.strftime(end_timestamp, '%Y-%m-%d-%H-%M-%S')
-        df.to_parquet("./data/external/weather_{}_{}_{}.parquet.gzip".format(
-                self.city, str_start_timestamp, str_end_timestamp
-            ),
-            index=False,
-            compression="gzip"
-        )
+        if save_dataset:
+            df.to_parquet("./data/external/weather_{}_{}_{}.parquet.gzip".format(
+                    self.city, str_start_timestamp, str_end_timestamp
+                ),
+                index=False,
+                compression="gzip"
+            )
         logger.info("Finish save data")
         return df
