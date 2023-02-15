@@ -152,6 +152,7 @@ class Inference:
             (result['time'] >= start_timestamp) & \
                 (result['time'] <= end_timestamp)
         ]
+        result[self.time_series_feature] = result[self.time_series_feature].clip(0)
         return result
     
     def get_weather_data(self, start_timestamp, end_timestamp):
