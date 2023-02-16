@@ -40,7 +40,7 @@ This dataset will be the main source of data for the modeling part
   - 25% percentile = 0.001344
   - 50% percentile = 0.004032
   - 75% percentile = 0.038306
-  - max = 0.038306
+  - max = 0.984543
 - Below is the histogram of completion rate
   
 ![Completion Rate Histogram](assets/completion_rate.png "Completion Rate Histogram")

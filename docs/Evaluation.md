@@ -6,4 +6,4 @@ The evaluation result of used time series model can be seen at 'notebook/04_time
 
 ## Classification
 
-The evaluation result of used time series model can be seen at 'notebook/05_classifier_modeling.ipybn' on 'Result Analysis' part. Also, it can be accessed [here](https://docs.google.com/spreadsheets/d/1Mfy6RO8UkOIkBb8PZ3DVwgrmbsljYUDV7sk34hnDgSQ/edit?usp=sharing)
+The evaluation result of classification model can be seen at 'notebook/05_classifier_modeling.ipybn' on 'Result Analysis' part. Also, it can be accessed [here](https://docs.google.com/spreadsheets/d/1Mfy6RO8UkOIkBb8PZ3DVwgrmbsljYUDV7sk34hnDgSQ/edit?usp=sharing)
